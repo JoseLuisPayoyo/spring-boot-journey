@@ -11,19 +11,20 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
 import payoyo.dia1.model.Tarea;
 import payoyo.dia1.service.ITareaService;
 
 import org.springframework.web.bind.annotation.RequestBody;
 
 
-
+@RequiredArgsConstructor
 @RestController
 @RequestMapping("api/tareas")
 @CrossOrigin(origins = "*")
 public class TareaController {
 
-    private ITareaService tareaService;
+    private final ITareaService tareaService;
 
     @PostMapping()
     public Tarea guardar(@Valid @RequestBody Tarea tarea){
