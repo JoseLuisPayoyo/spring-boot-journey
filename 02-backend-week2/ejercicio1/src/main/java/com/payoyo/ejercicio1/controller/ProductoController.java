@@ -43,7 +43,7 @@ public class ProductoController {
             .body(productoCreado);
     }
 
-    // listar todos
+    // listar todos los productos
     @GetMapping
     public ResponseEntity<List<ProductoResponseDTO>> buscarTodos() {
         List<ProductoResponseDTO> productos = productoService.buscarTodos();
