@@ -26,4 +26,6 @@ public interface ProductoService {
 
     List<ProductoResponseDTO> buscarPorNombre(String nombre);
 
+    Page<ProductoResponseDTO> buscarPorNombreConPaginacion(String nombre, Pageable pageable);
+
 } 

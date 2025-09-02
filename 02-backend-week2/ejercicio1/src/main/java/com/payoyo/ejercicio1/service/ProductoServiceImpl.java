@@ -101,5 +101,18 @@ public class ProductoServiceImpl implements ProductoService{
                 .map(productoMapper::toResponseDTO)
                 .toList();
     }
+
+    @Override
+    public Page<ProductoResponseDTO> buscarPorNombreConPaginacion(String nombre, Pageable pageable) {
+        Page<Producto> productos;
+
+        if (nombre == null ||nombre.isBlank()) {
+            productos = productoRepository.findAll(pageable);
+        } else{
+            productos = productoRepository.findByNombreContainingIgnoreCase(nombre, pageable);
+        }
+
+        return productos.map(productoMapper::toResponseDTO);
+    }
     
 }

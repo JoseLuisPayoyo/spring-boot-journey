@@ -90,11 +90,11 @@ public class ProductoController {
 
     // paginacion
     @GetMapping
-    public ResponseEntity<Page<ProductoResponseDTO>> getAllProductos(
-        @PageableDefault(page = 0, size = 5)
-        Pageable pageable)
+    public ResponseEntity<Page<ProductoResponseDTO>> getProductos(
+        @RequestParam(required = false) String nombre,
+        @PageableDefault(size = 5) Pageable pageable)
     {
-        Page<ProductoResponseDTO> pagina = productoService.findAll(pageable);
+        Page<ProductoResponseDTO> pagina = productoService.buscarPorNombreConPaginacion(nombre, pageable);
         return ResponseEntity.ok(pagina);
     }
 
