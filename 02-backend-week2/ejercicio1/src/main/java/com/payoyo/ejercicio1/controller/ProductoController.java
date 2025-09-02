@@ -2,6 +2,9 @@ package com.payoyo.ejercicio1.controller;
 
 import java.util.List;
 
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Page;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -79,6 +82,16 @@ public class ProductoController {
         return ResponseEntity
                 .noContent()
                 .build();
+    }
+
+    // paginacion
+    @GetMapping
+    public ResponseEntity<Page<ProductoResponseDTO>> getAllProductos(
+        @PageableDefault(page = 0, size = 10)
+        Pageable pageable)
+    {
+        Page<ProductoResponseDTO> pagina = productoService.findAll(pageable);
+        return ResponseEntity.ok(pagina);
     }
     
 }
