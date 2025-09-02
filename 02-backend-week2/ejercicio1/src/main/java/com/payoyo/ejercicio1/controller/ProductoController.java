@@ -1,6 +1,6 @@
 package com.payoyo.ejercicio1.controller;
 
-import java.util.List;
+//import java.util.List;
 
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Page;
@@ -46,14 +46,14 @@ public class ProductoController {
             .body(productoCreado);
     }
 
-    // listar todos los productos
-    @GetMapping
-    public ResponseEntity<List<ProductoResponseDTO>> buscarTodos() {
-        List<ProductoResponseDTO> productos = productoService.buscarTodos();
+    // // listar todos los productos
+    // @GetMapping
+    // public ResponseEntity<List<ProductoResponseDTO>> buscarTodos() {
+    //     List<ProductoResponseDTO> productos = productoService.buscarTodos();
 
-        return ResponseEntity
-            .ok(productos);
-    }
+    //     return ResponseEntity
+    //         .ok(productos);
+    // }
 
     // listar por id
     @GetMapping("/{id}")
@@ -87,7 +87,7 @@ public class ProductoController {
     // paginacion
     @GetMapping
     public ResponseEntity<Page<ProductoResponseDTO>> getAllProductos(
-        @PageableDefault(page = 0, size = 10)
+        @PageableDefault(page = 0, size = 5)
         Pageable pageable)
     {
         Page<ProductoResponseDTO> pagina = productoService.findAll(pageable);
