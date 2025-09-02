@@ -86,5 +86,20 @@ public class ProductoServiceImpl implements ProductoService{
         return productoRepository.findAll(pageable)
                 .map(productoMapper::toResponseDTO);
     }
+
+    @Override
+    public List<ProductoResponseDTO> buscarPorNombre(String nombre) {
+        List<Producto> productos;
+
+        if (nombre == null || nombre.isBlank()) {
+            productos = productoRepository.findAll();
+        } else{
+            productos = productoRepository.findByNombreContainingIgnoreCase(nombre);
+        }
+
+        return productos.stream()
+                .map(productoMapper::toResponseDTO)
+                .toList();
+    }
     
 }
