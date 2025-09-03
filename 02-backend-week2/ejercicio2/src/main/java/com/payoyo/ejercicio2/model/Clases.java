@@ -1,6 +1,5 @@
 package com.payoyo.ejercicio2.model;
 
-import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -23,12 +22,10 @@ public class Clases {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false)
     private String nombre_clase;
 
     private int duracion;
 
-    @Column(nullable = false)
     private String nombre_profesor;
     
 }
