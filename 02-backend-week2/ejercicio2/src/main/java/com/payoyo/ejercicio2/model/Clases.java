@@ -24,7 +24,7 @@ public class Clases {
     private Long id;
 
     @Column(nullable = false)
-    private String nombre_curso;
+    private String nombre_clase;
 
     private int duracion;
 
