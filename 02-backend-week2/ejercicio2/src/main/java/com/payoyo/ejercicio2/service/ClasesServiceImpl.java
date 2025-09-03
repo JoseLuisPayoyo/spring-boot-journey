@@ -26,13 +26,10 @@ public class ClasesServiceImpl implements ClasesService{
     // crear clase
     @Override
     public ResponseClasesDTO crear(CreateClasesDTO dto) {
-        // Cambiamos a entidad para insertar en db
         Clases clase = clasesMapper.toEntity(dto);
 
-        // guardamos en la db
         Clases claseGuardada = clasesRepository.save(clase);
 
-        //devolvemos el dto
         return clasesMapper.toDTO(claseGuardada);
     }
 
@@ -50,8 +47,8 @@ public class ClasesServiceImpl implements ClasesService{
     public ResponseClasesDTO listarPorId(Long id) {
         Clases clase = clasesRepository.findById(id)
             .orElseThrow(() -> new ClaseNoEncontradaException(id));
-        
-        return clasesMapper.toDTO(clase);
+
+        return clasesMapper.toDTO(clase);    
     }
 
     // actualizar clase
@@ -59,11 +56,13 @@ public class ClasesServiceImpl implements ClasesService{
     public ResponseClasesDTO actualizar(Long id, CreateClasesDTO dto) {
         Clases clase = clasesRepository.findById(id)
             .orElseThrow(() -> new ClaseNoEncontradaException(id));
-
+        
+        // si existe la modificamos
         clase.setNombre_clase(dto.getNombre_clase());
         clase.setDuracion(dto.getDuracion());
         clase.setNombre_profesor(dto.getNombre_profesor());
-        
+
+        // guardamos en la db
         Clases claseActualizada = clasesRepository.save(clase);
 
         return clasesMapper.toDTO(claseActualizada);
