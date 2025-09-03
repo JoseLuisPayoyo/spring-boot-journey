@@ -17,6 +17,8 @@ import com.payoyo.ejercicio2.dto.ResponseClasesDTO;
 import com.payoyo.ejercicio2.service.ClasesService;
 
 import jakarta.validation.Valid;
+import org.springframework.web.bind.annotation.PutMapping;
+
 
 @RestController
 @RequestMapping("/api/clases")
@@ -54,5 +56,17 @@ public class ClasesController {
 
         return ResponseEntity
                 .ok(dto);
+    }
+
+    // actualizar clase
+    @PutMapping("/{id}")
+    public ResponseEntity<ResponseClasesDTO> actualizar(
+        @PathVariable Long id, 
+        @Valid @RequestBody CreateClasesDTO dto) 
+    {
+        ResponseClasesDTO actualizado = clasesService.actualizar(id, dto);
+
+        return ResponseEntity
+                .ok(actualizado);
     }
 }
