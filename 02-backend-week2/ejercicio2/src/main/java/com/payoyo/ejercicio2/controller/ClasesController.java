@@ -77,7 +77,7 @@ public class ClasesController {
         clasesService.eliminar(id);
 
         return ResponseEntity
-            .noContent()
-            .build();
+                .noContent()
+                .build();
     }
 }
