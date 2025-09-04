@@ -1,5 +1,7 @@
 package com.payoyo.biblioteca.service;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.payoyo.biblioteca.dto.LibroCreateDTO;
@@ -34,6 +36,42 @@ public class LibroServiceImpl implements LibroService{
         Libro libroGuardado = libroRepository.save(libroCompleto);
 
         return libroMapper.toDTO(libroGuardado);
+    }
+
+    @Override
+    public Page<LibroResponseDTO> listar(Pageable pageable) {
+        Page<Libro> paginaLibros = libroRepository.findAll(pageable);
+
+        Page<LibroResponseDTO> librosDTOs = paginaLibros.map(libro -> libroMapper.toDTO(libro));
+
+        return librosDTOs;
+    }
+
+    @Override
+    public Page<LibroResponseDTO> buscar(String titulo, Long autorId, Pageable pageable) {
+        Page<Libro> paginaLibros;
+
+        if (titulo == null || titulo.isBlank()) {
+            if (autorId == null) {
+                // no hay filtros
+                paginaLibros = libroRepository.findAll(pageable);
+            } else{
+                // solo con el id sel autor
+                paginaLibros = libroRepository.findByAutorId(autorId, pageable);
+            }
+        } else{
+            if (autorId == null) {
+                // solo titulo
+                paginaLibros = libroRepository.findByTituloContainingIgnoreCase(titulo, pageable);
+            } else{
+                // todo
+                paginaLibros = libroRepository.findByTituloContainingIgnoreCaseAndAutorId(titulo, autorId, pageable);
+            }
+        }
+
+        Page<LibroResponseDTO> librosDTOs = paginaLibros.map(libros -> libroMapper.toDTO(libros));
+
+        return librosDTOs;
     }
 
     
