@@ -1,5 +1,8 @@
 package com.payoyo.ejercicio2.error;
 
+import java.util.List;
+import java.util.Map;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.http.converter.HttpMessageNotReadableException;
@@ -41,6 +44,17 @@ public class GlobalExceptionHandler {
             HttpStatus.BAD_REQUEST,
             mensaje,
             request.getRequestURI());
+
+        List<Map<String, Object>> erroresCampo = ex.getBindingResult()
+            .getFieldErrors()
+            .stream()
+            .map(err -> Map.of(
+                "field", err.getField(),
+                "rejectedValue", err.getRejectedValue(),
+                "message", err.getDefaultMessage()))
+            .toList();
+            
+        error.setErrors(erroresCampo);    
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(error);    
     }
 

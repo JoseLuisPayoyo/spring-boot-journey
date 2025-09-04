@@ -1,6 +1,8 @@
 package com.payoyo.ejercicio2.error;
 
 import java.time.Instant;
+import java.util.List;
+import java.util.Map;
 
 import org.springframework.http.HttpStatus;
 
@@ -14,6 +16,7 @@ public class ApiError {
     private final String message;
     private final String path;
     private final Instant timestamp;
+    private List<Map<String, Object>> errors;
 
 
     private ApiError(int status, String error, String message, String path, Instant timestamp) {
@@ -51,6 +54,16 @@ public class ApiError {
     public Instant getTimestamp() {
         return timestamp;
     }
+
+    public List<Map<String, Object>> getErrors() {
+        return errors;
+    }
+
+    public void setErrors(List<Map<String, Object>> errors) {
+        this.errors = errors;
+    }
+
+    
 
     
 
