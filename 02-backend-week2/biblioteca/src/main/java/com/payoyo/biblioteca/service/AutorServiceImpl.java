@@ -1,5 +1,7 @@
 package com.payoyo.biblioteca.service;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.payoyo.biblioteca.dto.AutorCreateDTO;
@@ -26,6 +28,17 @@ public class AutorServiceImpl implements AutorService{
         Autor autorGuardado = autorRepository.save(autor);
 
         return autorMapper.toDTO(autorGuardado);
+    }
+
+
+    // lista paginada de autores, con posibilidad de ordenar por nombre o país.
+    @Override
+    public Page<AutorResponseDTO> listar(Pageable pageable) {
+        Page<Autor> paginaAutores = autorRepository.findAll(pageable);
+
+        Page<AutorResponseDTO> paginaDTOs = paginaAutores.map(autor -> autorMapper.toDTO(autor));
+
+        return paginaDTOs;
     }
 
     
