@@ -1,11 +1,14 @@
 package com.payoyo.biblioteca.service;
 
+import org.springframework.stereotype.Service;
+
 import com.payoyo.biblioteca.dto.AutorCreateDTO;
 import com.payoyo.biblioteca.dto.AutorResponseDTO;
 import com.payoyo.biblioteca.mapper.AutorMapper;
 import com.payoyo.biblioteca.model.Autor;
 import com.payoyo.biblioteca.repository.AutorRepository;
 
+@Service
 public class AutorServiceImpl implements AutorService{
 
     private AutorRepository autorRepository;
