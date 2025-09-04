@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.payoyo.biblioteca.dto.AutorCreateDTO;
@@ -41,5 +42,15 @@ public class AutorController {
         Page<AutorResponseDTO> pagina = autorService.listar(pageable);
 
         return ResponseEntity.ok(pagina);
+    }
+
+    @GetMapping("/buscar")
+    public ResponseEntity<Page<AutorResponseDTO>> buscar(
+        @RequestParam(required = false) String nombre,
+        @RequestParam(required = false) String pais,
+        Pageable pageable)
+    {
+        Page<AutorResponseDTO> resultado = autorService.buscar(nombre, pais, pageable);
+        return ResponseEntity.ok(resultado);
     }
 }
