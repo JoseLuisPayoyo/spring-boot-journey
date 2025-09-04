@@ -11,4 +11,6 @@ public interface AutorService {
     AutorResponseDTO crear(AutorCreateDTO dto);
 
     Page<AutorResponseDTO> listar(Pageable pageable);
+
+    Page<AutorResponseDTO> buscar(String nombre, String pais, Pageable pageable);
 }
