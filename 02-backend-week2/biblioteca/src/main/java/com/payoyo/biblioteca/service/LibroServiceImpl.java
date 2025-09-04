@@ -1,5 +1,7 @@
 package com.payoyo.biblioteca.service;
 
+import org.springframework.stereotype.Service;
+
 import com.payoyo.biblioteca.dto.LibroCreateDTO;
 import com.payoyo.biblioteca.dto.LibroResponseDTO;
 import com.payoyo.biblioteca.exception.AutorNoEncontradoException;
@@ -9,6 +11,7 @@ import com.payoyo.biblioteca.model.Libro;
 import com.payoyo.biblioteca.repository.AutorRepository;
 import com.payoyo.biblioteca.repository.LibroRepository;
 
+@Service
 public class LibroServiceImpl implements LibroService{
 
     private LibroRepository libroRepository;
