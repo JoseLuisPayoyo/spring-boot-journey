@@ -1,16 +1,19 @@
 package com.payoyo.peopleops_backend.mapper;
 
 
+import org.springframework.stereotype.Component;
+
 import com.payoyo.peopleops_backend.dto.departamento.DepartamentoCreateDTO;
 import com.payoyo.peopleops_backend.dto.departamento.DepartamentoResponseDTO;
 import com.payoyo.peopleops_backend.dto.departamento.DepartamentoUpdateDTO;
 import com.payoyo.peopleops_backend.model.Departamento;
 
 
+@Component
 public class DepartamentoMapper {
 
     // de entidad a dto
-    public static Departamento toEntity(DepartamentoCreateDTO dto){
+    public Departamento toEntity(DepartamentoCreateDTO dto){
         Departamento departamento = new Departamento();
 
         departamento.setNombre(dto.getNombre());
@@ -22,14 +25,14 @@ public class DepartamentoMapper {
     }
 
     // actualizar dto
-    public static void updateEntity(Departamento entity, DepartamentoUpdateDTO dto){
+    public void updateEntity(Departamento entity, DepartamentoUpdateDTO dto){
         entity.setNombre(dto.getNombre());
         entity.setCodigo(dto.getCodigo());
         entity.setPresupuestoAnual(dto.getPresupuestoAnual());
     }
 
     // de dto a entidad
-    public static DepartamentoResponseDTO toDTO(Departamento departamento){
+    public DepartamentoResponseDTO toDTO(Departamento departamento){
         DepartamentoResponseDTO dto = new DepartamentoResponseDTO();
         dto.setId(departamento.getId());
         dto.setNombre(departamento.getNombre());
