@@ -68,7 +68,7 @@ public class EmpleadoController {
     }
 
     // actualizar empleado con su departamento
-    @PutMapping
+    @PutMapping("/{id}")
     public ResponseEntity<EmpleadoResponseDTO> actualizar(
         @PathVariable Long id,
         @Valid @RequestBody EmpleadoUpdateDTO dto
