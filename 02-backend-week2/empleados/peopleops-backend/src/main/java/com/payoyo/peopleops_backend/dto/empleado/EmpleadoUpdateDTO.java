@@ -51,10 +51,10 @@ public class EmpleadoUpdateDTO {
     @NotNull(message = "El estado del empleado es obligatorio")
     private EstadoEmpleado estado;
 
-    @NotBlank(message = "El departamento es obligatorio")
+    @NotNull(message = "El departamento es obligatorio")
     private Long departamentoId;
 
-    @NotBlank(message = "El departamento es obligatorio")
+    @NotNull(message = "El departamento es obligatorio")
     private String departamentoNombre;
 
     
