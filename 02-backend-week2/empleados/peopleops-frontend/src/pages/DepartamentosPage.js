@@ -1,144 +1,180 @@
 import { useEffect, useState } from "react";
-import { fetchDepartamentos, crearDepartamento } from "../api/departamentos";
+import {
+  fetchDepartamentos,
+  crearDepartamento,
+  actualizarDepartamento,
+  eliminarDepartamento,
+} from "../api/departamentos";
 
-export default function DepartamentosPage() {
+export default function DepartamentoPage() {
   const [departamentos, setDepartamentos] = useState([]);
-  const [loading, setLoading] = useState(true);
-
-  const [nuevoDepartamento, setNuevoDepartamento] = useState({
-    nombre: "",
-    codigo: "",
-    presupuestoAnual: "",
-  });
+  const [nombre, setNombre] = useState("");
+  const [codigo, setCodigo] = useState("");
+  const [presupuesto, setPresupuesto] = useState("");
+  const [editando, setEditando] = useState(false);
+  const [departamentoEditando, setDepartamentoEditando] = useState(null);
 
   useEffect(() => {
-    fetchDepartamentos()
-      .then(setDepartamentos)
-      .catch((err) => {
-        console.error("Error al cargar departamentos:", err);
-        alert("Error al cargar los departamentos");
-      })
-      .finally(() => setLoading(false));
+    fetchDepartamentos().then(setDepartamentos).catch(console.error);
   }, []);
 
-  function handleChange(e) {
-    const { name, value } = e.target;
-    setNuevoDepartamento((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
+  async function handleSubmit(e) {
+    e.preventDefault();
+    try {
+      const nuevo = await crearDepartamento({
+        nombre,
+        codigo,
+        presupuestoAnual: presupuesto,
+      });
+
+      setDepartamentos((prev) => [...prev, nuevo]);
+      limpiarFormulario();
+    } catch (err) {
+      console.error("Error creando:", err.message);
+    }
   }
 
-  function handleSubmit(e) {
+  async function handleUpdate(e) {
     e.preventDefault();
-
-    crearDepartamento(nuevoDepartamento)
-      .then((departamentoCreado) => {
-        setDepartamentos((prev) => [...prev, departamentoCreado]);
-        setNuevoDepartamento({ nombre: "", codigo: "", presupuestoAnual: "" });
-      })
-      .catch((err) => {
-        console.error("Error al crear departamento:", err);
-        alert("Error al crear el departamento");
+    try {
+      const actualizado = await actualizarDepartamento(departamentoEditando.id, {
+        nombre,
+        codigo,
+        presupuestoAnual: presupuesto,
       });
+
+      setDepartamentos((prev) =>
+        prev.map((d) => (d.id === actualizado.id ? actualizado : d))
+      );
+
+      limpiarFormulario();
+    } catch (err) {
+      console.error("Error actualizando:", err.message);
+    }
+  }
+
+  function handleEdit(depto) {
+    setEditando(true);
+    setDepartamentoEditando(depto);
+    setNombre(depto.nombre);
+    setCodigo(depto.codigo);
+    setPresupuesto(depto.presupuestoAnual);
+  }
+
+  async function handleDelete(id) {
+    const confirmar = window.confirm("¿Estás seguro de que quieres eliminar este departamento?");
+    if (!confirmar) return;
+
+    try {
+      await eliminarDepartamento(id);
+      setDepartamentos((prev) => prev.filter((d) => d.id !== id));
+    } catch (err) {
+      console.error("Error eliminando:", err.message);
+    }
+  }
+
+  function limpiarFormulario() {
+    setNombre("");
+    setCodigo("");
+    setPresupuesto("");
+    setEditando(false);
+    setDepartamentoEditando(null);
   }
 
   return (
-    <div className="p-8 max-w-5xl mx-auto">
-      <h1 className="text-3xl font-bold text-gray-800 mb-6">Gestión de Departamentos</h1>
+    <div className="p-6 max-w-4xl mx-auto">
+      <h1 className="text-2xl font-bold mb-4">
+        {editando ? "Editar Departamento" : "Nuevo Departamento"}
+      </h1>
 
-      {/* Formulario */}
-      <form
-        onSubmit={handleSubmit}
-        className="mb-10 bg-white p-6 rounded-xl shadow-md border space-y-6"
-      >
-        <h2 className="text-xl font-semibold text-gray-700">Crear nuevo departamento</h2>
-
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-          <div>
-            <label htmlFor="nombre" className="block font-medium text-sm text-gray-600 mb-1">
-              Nombre
-            </label>
-            <input
-              type="text"
-              id="nombre"
-              name="nombre"
-              value={nuevoDepartamento.nombre}
-              onChange={handleChange}
-              required
-              className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring focus:ring-blue-300"
-            />
-          </div>
-
-          <div>
-            <label htmlFor="codigo" className="block font-medium text-sm text-gray-600 mb-1">
-              Código
-            </label>
-            <input
-              type="text"
-              id="codigo"
-              name="codigo"
-              value={nuevoDepartamento.codigo}
-              onChange={handleChange}
-              required
-              className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring focus:ring-blue-300"
-            />
-          </div>
-
-          <div>
-            <label htmlFor="presupuestoAnual" className="block font-medium text-sm text-gray-600 mb-1">
-              Presupuesto Anual (€)
-            </label>
-            <input
-              type="number"
-              id="presupuestoAnual"
-              name="presupuestoAnual"
-              value={nuevoDepartamento.presupuestoAnual}
-              onChange={handleChange}
-              required
-              step="0.01"
-              className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:outline-none focus:ring focus:ring-blue-300"
-            />
-          </div>
+      <form onSubmit={editando ? handleUpdate : handleSubmit} className="space-y-4 mb-8">
+        <div>
+          <label className="block text-sm font-medium">Nombre</label>
+          <input
+            type="text"
+            value={nombre}
+            onChange={(e) => setNombre(e.target.value)}
+            className="w-full p-2 border rounded"
+            required
+          />
+        </div>
+        <div>
+          <label className="block text-sm font-medium">Código</label>
+          <input
+            type="text"
+            value={codigo}
+            onChange={(e) => setCodigo(e.target.value)}
+            className="w-full p-2 border rounded"
+            required
+          />
+        </div>
+        <div>
+          <label className="block text-sm font-medium">Presupuesto Anual</label>
+          <input
+            type="number"
+            value={presupuesto}
+            onChange={(e) => setPresupuesto(e.target.value)}
+            className="w-full p-2 border rounded"
+            required
+          />
         </div>
 
-        <button
-          type="submit"
-          className="bg-blue-600 hover:bg-blue-700 text-white font-semibold px-6 py-2 rounded-lg shadow"
-        >
-          Crear Departamento
-        </button>
+        <div className="flex gap-4">
+          <button
+            type="submit"
+            className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded"
+          >
+            {editando ? "Actualizar" : "Crear"}
+          </button>
+
+          {editando && (
+            <button
+              type="button"
+              onClick={limpiarFormulario}
+              className="bg-gray-500 hover:bg-gray-600 text-white px-4 py-2 rounded"
+            >
+              Cancelar
+            </button>
+          )}
+        </div>
       </form>
 
-      {/* Tabla */}
-      {loading ? (
-        <p className="text-gray-600">Cargando departamentos...</p>
-      ) : (
-        <div className="overflow-x-auto rounded-lg shadow">
-          <table className="min-w-full bg-white border border-gray-200">
-            <thead className="bg-gray-100 text-gray-700 text-sm uppercase">
-              <tr>
-                <th className="px-4 py-3 border">ID</th>
-                <th className="px-4 py-3 border">Nombre</th>
-                <th className="px-4 py-3 border">Código</th>
-                <th className="px-4 py-3 border">Presupuesto</th>
-                <th className="px-4 py-3 border">Activo</th>
-              </tr>
-            </thead>
-            <tbody>
-              {departamentos.map((d) => (
-                <tr key={d.id} className="text-gray-800 text-sm text-center hover:bg-gray-50">
-                  <td className="border px-4 py-2">{d.id}</td>
-                  <td className="border px-4 py-2">{d.nombre}</td>
-                  <td className="border px-4 py-2">{d.codigo}</td>
-                  <td className="border px-4 py-2">{d.presupuestoAnual} €</td>
-                  <td className="border px-4 py-2">{d.activo ? "Si" : "No"}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-      )}
+      <h2 className="text-xl font-semibold mb-2">Listado de Departamentos</h2>
+      <table className="min-w-full bg-white border rounded shadow-md">
+        <thead>
+          <tr className="bg-gray-100">
+            <th className="px-4 py-2 border">ID</th>
+            <th className="px-4 py-2 border">Nombre</th>
+            <th className="px-4 py-2 border">Código</th>
+            <th className="px-4 py-2 border">Presupuesto</th>
+            <th className="px-4 py-2 border">Acciones</th>
+          </tr>
+        </thead>
+        <tbody>
+          {departamentos.map((d) => (
+            <tr key={d.id}>
+              <td className="px-4 py-2 border">{d.id}</td>
+              <td className="px-4 py-2 border">{d.nombre}</td>
+              <td className="px-4 py-2 border">{d.codigo}</td>
+              <td className="px-4 py-2 border">{d.presupuestoAnual} €</td>
+              <td className="px-4 py-2 border space-x-2">
+                <button
+                  onClick={() => handleEdit(d)}
+                  className="bg-yellow-500 hover:bg-yellow-600 text-white px-2 py-1 rounded"
+                >
+                  Editar
+                </button>
+                <button
+                  onClick={() => handleDelete(d.id)}
+                  className="bg-red-600 hover:bg-red-700 text-white px-2 py-1 rounded"
+                >
+                  Eliminar
+                </button>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
     </div>
   );
 }

@@ -1,14 +1,25 @@
 import { request } from "./http";
 
-// Obtener todos los departamentos
 export function fetchDepartamentos() {
   return request("/departamentos", { method: "GET" });
 }
 
-// Crear nuevo departamento
-export function crearDepartamento(departamento) {
+export function crearDepartamento(body) {
   return request("/departamentos", {
     method: "POST",
-    body: departamento,
+    body,
+  });
+}
+
+export function actualizarDepartamento(id, body) {
+  return request(`/departamentos/${id}`, {
+    method: "PUT",
+    body,
+  });
+}
+
+export function eliminarDepartamento(id) {
+  return request(`/departamentos/${id}`, {
+    method: "DELETE",
   });
 }
