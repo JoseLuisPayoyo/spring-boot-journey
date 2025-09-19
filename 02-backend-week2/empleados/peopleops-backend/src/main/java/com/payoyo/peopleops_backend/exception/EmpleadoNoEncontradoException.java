@@ -6,4 +6,5 @@ public class EmpleadoNoEncontradoException extends RuntimeException{
         super("Empleado no econtrado con id: " + id);
     }
     
+
 }

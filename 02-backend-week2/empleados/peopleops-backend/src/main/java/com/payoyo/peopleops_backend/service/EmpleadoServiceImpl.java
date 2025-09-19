@@ -68,7 +68,7 @@ public class EmpleadoServiceImpl implements EmpleadoService{
             .orElseThrow(() -> new EmpleadoNoEncontradoException(id));
         
         Departamento departamento = departamentoRepository.findByNombre(dto.getDepartamentoNombre())
-            .orElseThrow(() -> new DepartamentoNoEncontradoException(dto.getDepartamentoId()));
+            .orElseThrow(() -> new DepartamentoNoEncontradoException(dto.getDepartamentoNombre()));
         
         empleadoMapper.updateEntity(empleado, dto, departamento);
         Empleado empleadoGuardado = empleadoRepository.save(empleado);
