@@ -3,9 +3,13 @@ package com.payoyo.peopleops_backend.service;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Page;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
 import com.payoyo.peopleops_backend.dto.empleado.EmpleadoCreateDTO;
+import com.payoyo.peopleops_backend.dto.empleado.EmpleadoFiltroDTO;
 import com.payoyo.peopleops_backend.dto.empleado.EmpleadoResponseDTO;
 import com.payoyo.peopleops_backend.dto.empleado.EmpleadoUpdateDTO;
 import com.payoyo.peopleops_backend.exception.DepartamentoNoEncontradoException;
@@ -15,6 +19,7 @@ import com.payoyo.peopleops_backend.model.Departamento;
 import com.payoyo.peopleops_backend.model.Empleado;
 import com.payoyo.peopleops_backend.repository.DepartamentoRepository;
 import com.payoyo.peopleops_backend.repository.EmpleadoRepository;
+import com.payoyo.peopleops_backend.specification.EmpleadoSpecification;
 
 import lombok.RequiredArgsConstructor;
 
@@ -26,6 +31,7 @@ public class EmpleadoServiceImpl implements EmpleadoService{
     private final EmpleadoMapper empleadoMapper;
     private final DepartamentoRepository departamentoRepository;
 
+    /* --- MÉTODOS DEL CRUD BÁSICO --- */
     @Override
     public EmpleadoResponseDTO crear(EmpleadoCreateDTO dto) {
         Departamento departamento = departamentoRepository.findById(dto.getDepartamentoId())
@@ -75,5 +81,15 @@ public class EmpleadoServiceImpl implements EmpleadoService{
         
         return empleadoMapper.toDTO(empleadoGuardado);
     }
-    
+
+    /* --- METODOS DEL FILTRO --- */
+    @Override
+    public Page<EmpleadoResponseDTO> filtrar(EmpleadoFiltroDTO filtroDTO, Pageable pageable) {
+        Specification<Empleado> spec = EmpleadoSpecification.filtrar(filtroDTO);
+
+        Page<Empleado> paginaEmpleados = empleadoRepository.findAll(spec, pageable);
+
+        return paginaEmpleados.map(empleadoMapper::toDTO);
+    }
+
 }

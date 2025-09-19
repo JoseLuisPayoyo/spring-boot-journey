@@ -2,6 +2,8 @@ package com.payoyo.peopleops_backend.controller;
 
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -12,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.payoyo.peopleops_backend.dto.empleado.EmpleadoCreateDTO;
+import com.payoyo.peopleops_backend.dto.empleado.EmpleadoFiltroDTO;
 import com.payoyo.peopleops_backend.dto.empleado.EmpleadoResponseDTO;
 import com.payoyo.peopleops_backend.dto.empleado.EmpleadoUpdateDTO;
 import com.payoyo.peopleops_backend.service.EmpleadoService;
@@ -77,5 +80,16 @@ public class EmpleadoController {
 
         return ResponseEntity.ok(empleadoActualizado);
     }
+
+    // metodo para filtrar
+    @GetMapping("/filtrar")
+    public ResponseEntity<Page<EmpleadoResponseDTO>> filtrar(
+        EmpleadoFiltroDTO filtroDTO,
+        Pageable pageable) {
+        
+        Page<EmpleadoResponseDTO> resultado = empleadoService.filtrar(filtroDTO, pageable);
+        return ResponseEntity.ok(resultado);
+    }
+
     
 }
