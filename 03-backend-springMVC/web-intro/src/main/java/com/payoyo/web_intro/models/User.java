@@ -2,6 +2,7 @@ package com.payoyo.web_intro.models;
 
 public class User {
 
+    private String title;
     private String name;
     private String lastname;
     private String email;
@@ -38,6 +39,13 @@ public class User {
     public void setEmail(String email) {
         this.email = email;
     }
+    public String getTittle() {
+        return title;
+    }
+    public void setTittle(String tittle) {
+        this.title = tittle;
+    }
+    
     
 
     

@@ -1,6 +1,6 @@
 package com.payoyo.web_intro.controllers;
 
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import org.springframework.stereotype.Controller;
@@ -25,10 +25,13 @@ public class UserController {
 
     @GetMapping("/list")
     public String list(ModelMap model){
-        List<User> users = new ArrayList<>();
+        List<User> users = Arrays.asList(
+            new User("Jose", "Rod", "correo"),
+            new User("Jose Luis", "Rod", "correo"),
+            new User("Luis", "Rod", "correo"));
 
         model.addAttribute("users", users);
-        model.addAttribute("tittle", "Listado de usuarios");
+        model.addAttribute("title", "Listado de usuarios!");    
 
         return "list";
     }
