@@ -7,17 +7,19 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.payoyo.web_intro.models.User;
+
 @RestController
 @RequestMapping("/api")
 public class UserRestController {
 
     @GetMapping("/details")
     public Map<String, Object> details() {
+        User user = new User("Jose Luis", "Rodriguez");
         Map<String, Object> body = new HashMap<>();
 
         body.put("tittle", "Hola Spring");
-        body.put("name", "Jose Luis");
-        body.put("lastname", "Rodriguez");
+        body.put("user", user);
 
         return body;
     }
