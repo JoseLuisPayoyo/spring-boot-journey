@@ -1,5 +1,6 @@
 package com.payoyo.web_intro.controllers;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -13,6 +14,9 @@ import com.payoyo.web_intro.models.dto.ParamDTO;
 @RestController
 @RequestMapping("/api/var")
 public class PathVariableController {
+
+    @Value("${config.username}")
+    private String username;
     
     @GetMapping("/baz/{message}/{code}")
     public ParamDTO baz(@PathVariable String message, @PathVariable Integer code) {
@@ -28,4 +32,10 @@ public class PathVariableController {
         //hacer un save en la db
         return user;
     }
+
+    @GetMapping("/pp") 
+    public String str(){
+        return username;
+    }
+
 }
