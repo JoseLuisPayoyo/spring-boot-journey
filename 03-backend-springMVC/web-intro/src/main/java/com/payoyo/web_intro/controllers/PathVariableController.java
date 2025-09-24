@@ -1,5 +1,8 @@
 package com.payoyo.web_intro.controllers;
 
+import java.util.List;
+import java.util.Map;
+
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -16,7 +19,16 @@ import com.payoyo.web_intro.models.dto.ParamDTO;
 public class PathVariableController {
 
     @Value("${config.username}")
-    private String username;
+    private List<String> usernamwe;
+
+    @Value("#{'${config.username}'.toUpperCase()}")
+    private List<String> username;
+
+    @Value("#{${config.valuesMap}}")
+    private Map<String, Object> valuesMap;
+
+    @Value("#{${config.valuesMap}.product}")
+    private String product;
     
     @GetMapping("/baz/{message}/{code}")
     public ParamDTO baz(@PathVariable String message, @PathVariable Integer code) {
@@ -34,8 +46,17 @@ public class PathVariableController {
     }
 
     @GetMapping("/pp") 
-    public String str(){
+    public List<String> str(){
         return username;
     }
 
+    @GetMapping("/values")
+    public Map<String, Object> values(){
+        return valuesMap;
+    }
+
+    @GetMapping("/product")
+    public String product(){
+        return product;
+    }
 }
