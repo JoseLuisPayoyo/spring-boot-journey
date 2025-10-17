@@ -7,12 +7,15 @@ Cada jueves una nueva lección: #SpringBootJourney 💻
 
 ---
 
-## 📚 Qué aprenderás
-✅ Fundamentos de Spring Boot  
-✅ JPA, relaciones y DTOs  
-✅ Seguridad con JWT  
-✅ Testing y Docker  
-✅ Proyecto final de producción  
+## 📘 ¿Qué es este proyecto?
+
+**Spring Boot Journey** es una serie abierta creada por [mi](https://github.com/Payoyo)  
+para aprender **Spring Boot** de forma práctica y progresiva.  
+Cada módulo incluye:
+- 🧠 Teoría resumida (PDF descargable)
+- 💻 Ejercicios guiados
+- ⚙️ Proyecto de ejemplo con código funcional
+- 🧩 Reto final y posibilidad de enviar *Pull Requests* con tus soluciones 
 
 ---
 
@@ -29,8 +32,21 @@ Cada jueves una nueva lección: #SpringBootJourney 💻
 1. Lee la teoría (PDF o README)  
 2. Haz los ejercicios en tu entorno  
 3. Envía un Pull Request con tu solución  
-4. Te daré feedback directamente  
+4. Te daré feedback directamente
 
+Cada carpeta `module-XX` contiene su teoría, ejercicios y ejemplo ejecutable.
+
+---
+
+## ⚡ Cómo usar este repositorio
+
+1️⃣ **Clona el proyecto**
+```bash
+git clone https://github.com/Payoyo/spring-boot-journey.git
+cd module-01-fundamentos/examples/hello-api
+mvn spring-boot:run
+http://localhost:8080/api/hello, o postman
+```
 ---
 
 ## 🌐 Síguelo en LinkedIn
