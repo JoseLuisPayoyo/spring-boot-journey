@@ -34,8 +34,8 @@ Cada jueves una nueva lección: #SpringBootJourney 💻
 ---
 
 ## 🌐 Síguelo en LinkedIn
-Publico una lección nueva **cada jueves** 👉 [linkedin.com/in/payoyo](https://www.linkedin.com/in/jose-luis-rodriguez-valenzuela-dev/)
-Mi página Web 👉 [payoyo](https://portfolio-joseluis.vercel.app/)
+Publico una lección nueva **cada jueves** 👉 [linkedin.com/in/payoyo](https://www.linkedin.com/in/jose-luis-rodriguez-valenzuela-dev/) <br>
+👉 [Mi página Web](https://portfolio-joseluis.vercel.app/)
 
 ---
 
