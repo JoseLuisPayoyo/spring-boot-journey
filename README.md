@@ -48,6 +48,14 @@ mvn spring-boot:run
 http://localhost:8080/api/hello, o postman
 ```
 ---
+## Quieres que revise tus ejercicios?
+**Sigue estos pasos**
+1. Crea una rama con tu nombre y módulo
+``` git checkout -b soluciones-tu-nombre-mod1 ```
+2. Completa los ejercicios dentro de la carpeta exercise/
+3. Envía un Pull Request a main con el titulo: *[Módulo 1] Solución de ejercicios — Tu Nombre*
+4. Te daré feedback y publicaré las mejores soluciones
+---
 
 ## 🌐 Síguelo en LinkedIn
 Publico una lección nueva **cada jueves** 👉 [linkedin.com/in/payoyo](https://www.linkedin.com/in/jose-luis-rodriguez-valenzuela-dev/) <br>
