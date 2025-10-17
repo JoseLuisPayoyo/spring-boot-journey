@@ -1,5 +1,6 @@
 # 🚀 Spring Boot Journey — by Payoyo Tech
-![Payoyo Tech banner](docs/logo.png)
+
+<p align="center"> <img src="./docs/logo.png" alt="Logo Payoyo" width="350" /> </p>
 
 Aprende **Spring Boot paso a paso** con teoría, ejercicios y ejemplos reales.
 Cada jueves una nueva lección: #SpringBootJourney 💻
